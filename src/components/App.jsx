@@ -4,7 +4,7 @@ import { ContactsList } from './ContactsList/ContactsList';
 import { Filter } from './Filter/Filter';
 import css from '../components/App.module.css';
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { saveFilter } from './Store/contactsSlice';
 
 const init = [
@@ -15,7 +15,6 @@ const init = [
 ];
 
 export const App = () => {
-  const filterValue = useSelector(state => state.contacts.filter);
   const dispatch = useDispatch();
 
   const [contacts, setContacts] = useState(
