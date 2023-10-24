@@ -1,50 +1,39 @@
-import { useState } from 'react';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactsList } from './ContactsList/ContactsList';
 import { Filter } from './Filter/Filter';
 import css from '../components/App.module.css';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { saveFilter } from './Store/contactsSlice';
-
-const init = [
-  { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-  { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-  { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-  { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-];
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addContacts,
+  deleteContacts,
+  setFilter,
+} from 'redux/contactsListReducers';
 
 export const App = () => {
   const dispatch = useDispatch();
 
-  const [contacts, setContacts] = useState(
-    () => JSON.parse(localStorage.getItem('contacts')) ?? init
-  );
-  const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+  //const [contacts, setContacts] = useState(init);
+  const contacts = useSelector(state => state.contacts.contacts);
+  const filter = useSelector(state => state.contacts.filter);
 
   const handleAddContact = userContacts => {
-    if (
-      contacts.some(
-        contact =>
-          contact.name.toLowerCase() === userContacts.name.toLowerCase() ||
-          contact.number === userContacts.number
-      )
-    ) {
+    const hasDuplicateContacts = contacts.some(
+      contact =>
+        contact.name.toLowerCase() === userContacts.name.toLowerCase() ||
+        contact.number === userContacts.number
+    );
+
+    if (hasDuplicateContacts) {
       alert(
         `${userContacts.name} or ${userContacts.number} is already in contacts`
       );
       return;
     }
-    setContacts(prevState => [userContacts, ...prevState]);
+    dispatch(addContacts(userContacts));
   };
 
   const handleFilterChange = e => {
-    setFilter(e.target.value);
-    dispatch(saveFilter(e.target.value));
+    dispatch(setFilter(e.target.value));
   };
 
   const getContactFromFilter = () => {
@@ -55,9 +44,7 @@ export const App = () => {
   };
 
   const handleDelete = contactId => {
-    setContacts(contacts => {
-      return contacts.filter(contact => contact.id !== contactId);
-    });
+    dispatch(deleteContacts(contactId));
   };
 
   return (

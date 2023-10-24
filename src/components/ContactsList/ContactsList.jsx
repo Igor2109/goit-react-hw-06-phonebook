@@ -1,9 +1,9 @@
 import css from './ContactsList.module.css';
 
-export const ContactsList = ({ contacts, handleDelete }) => {
+export const ContactsList = ({ handleDelete, ...restProps }) => {
   return (
     <ul className={css.list}>
-      {contacts.map(contact => {
+      {restProps.contacts.map(contact => {
         const { id, name, number } = contact;
         return (
           <li key={id}>
