@@ -1,14 +1,10 @@
 import css from './ContactForm.module.css';
 import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
-import { useDispatch, useSelector } from 'react-redux';
-import { addContacts } from 'redux/contactsListReducers';
 
 export const ContactForm = ({ handleAddContact }) => {
   const [data, setData] = useState({ name: '', number: '' });
   const { name, number } = data;
-
-  const dispatch = useDispatch();
 
   const handleInputChange = ({ target }) => {
     const { name, value } = target;
