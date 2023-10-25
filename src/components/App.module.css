@@ -1,7 +1,13 @@
 .container {
-  width: 500px;
-  padding: 24px;
+  color: white;
+  background-color: #473838;
+  max-width: 1440px;
+  height: 100vh;
+  padding: 44px;
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+.body {
+  background-color: #373232;
 }

@@ -1,8 +1,29 @@
 import css from './ContactForm.module.css';
 import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
+import { addContact } from 'redux/contactsSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
-export const ContactForm = ({ handleAddContact }) => {
+export const ContactForm = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts);
+
+  const handleAddContact = userContacts => {
+    const hasDuplicateContacts = contacts.some(
+      contact =>
+        contact.name.toLowerCase() === userContacts.name.toLowerCase() ||
+        contact.number === userContacts.number
+    );
+
+    if (hasDuplicateContacts) {
+      alert(
+        `${userContacts.name} or ${userContacts.number} is already in contacts`
+      );
+      return;
+    }
+    dispatch(addContact(userContacts));
+  };
+
   const [data, setData] = useState({ name: '', number: '' });
   const { name, number } = data;
 
@@ -49,7 +70,7 @@ export const ContactForm = ({ handleAddContact }) => {
           className={css.formInput}
         />
       </label>
-      <button>Add contact</button>
+      <button className={css.btnDelete}>Add contact</button>
     </form>
   );
 };
