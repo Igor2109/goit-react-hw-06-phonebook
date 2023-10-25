@@ -3,16 +3,12 @@ import { ContactsList } from './ContactsList/ContactsList';
 import { Filter } from './Filter/Filter';
 import css from '../components/App.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  addContacts,
-  deleteContacts,
-  setFilter,
-} from 'redux/contactsListReducers';
+import { addContact, deleteContact } from 'redux/contactsSlice';
+import { setFilter } from 'redux/filterSlice';
 
 export const App = () => {
   const dispatch = useDispatch();
 
-  //const [contacts, setContacts] = useState(init);
   const contacts = useSelector(state => state.contacts);
   const filter = useSelector(state => state.filter);
 
@@ -29,7 +25,7 @@ export const App = () => {
       );
       return;
     }
-    dispatch(addContacts(userContacts));
+    dispatch(addContact(userContacts));
   };
 
   const handleFilterChange = e => {
@@ -44,7 +40,7 @@ export const App = () => {
   };
 
   const handleDelete = contactId => {
-    dispatch(deleteContacts(contactId));
+    dispatch(deleteContact(contactId));
   };
 
   return (
