@@ -15,29 +15,18 @@ const contactsSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     setContacts(state, action) {
-      state.contacts = action.payload; //  - mutation
-      //return {
-      //  ...state, // spread - rozmazali
-      //  contacts: action.payload,
-      // };
+      state.contacts = action.payload;
     },
     setFilter(state, action) {
       state.filter = action.payload;
     },
     addContacts(state, action) {
       state.contacts.push(action.payload);
-      //return {
-      //  ...state,
-      //  contacts: [...state.contacts, action.payload]
-      //}
     },
     deleteContacts(state, action) {
-      // action.payload = 3
       state.contacts = state.contacts.filter(
         contact => contact.id !== action.payload
       );
-      // [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}]
-      // [{id: 1}, {id: 2}, {id: 4}, {id: 5}]
     },
   },
 });

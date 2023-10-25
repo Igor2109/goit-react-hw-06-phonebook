@@ -13,8 +13,8 @@ export const App = () => {
   const dispatch = useDispatch();
 
   //const [contacts, setContacts] = useState(init);
-  const contacts = useSelector(state => state.contacts.contacts);
-  const filter = useSelector(state => state.contacts.filter);
+  const contacts = useSelector(state => state.contacts);
+  const filter = useSelector(state => state.filter);
 
   const handleAddContact = userContacts => {
     const hasDuplicateContacts = contacts.some(
